@@ -1,0 +1,58 @@
+* Osa0 palautukset
+
+0.1..0.3 Lukutehtäviä
+
+** 0.4 uusi muistiinpano
+
+#+BEGIN_SRC plantuml :file osa0.4_uusi_muistiinpano.png
+== req new_note == 
+selain   -> palvelin : POST https://fullstack-exampleapp.herokuapp.com/new_note 
+palvelin -> selain   : 302 redirect /notes, ei viestiä
+note right:  POST pyytää uutta resurssia (note) luotavaksi. Selain vastaa OK, mutta ohjaa sivulle /notes
+== req notes ==
+selain   -> palvelin : GET /notes
+palvelin -> selain   : notes html
+note right: notes sivun html
+== req main.js == 
+selain   -> palvelin  : GET /main.js
+palvelin -> selain    : main.js
+note right:  notes sivun viittaama js tiedosto
+== req data.json == 
+selain   -> palveln   : GET /data.json
+palvelin -> selain    : data.json ({"content":"HTML is easy",".....
+note right : main.js lataama tiedosto
+#+END_SRC
+
+** 0.5 Single page app 
+
+#+BEGIN_SRC plantuml :file osa0.4_spa.png
+== req spa ==
+selain   -> palvelin : GET https://fullstack-exampleapp.herokuapp.com/spa
+palvelin -> selain   : html
+== req css == 
+selain   -> palvelin : GET https://fullstack-exampleapp.herokuapp.com/main.css 
+note right: Pää html viittaa tähän tyylitiedostoon
+palvelin -> selain   : tyylitiedosto
+== req js ==
+selain   -> palvelin : GET https://fullstack-exampleapp.herokuapp.com/spa.js
+note right: Pää html viittaa tähän js koodiin
+palvelin -> selain   : javascript koodi
+== req data == 
+selain   -> palvelin : GET https://fullstack-exampleapp.herokuapp.com/data.json
+note right: js koodin hakema data
+palvelin -> selain   : data
+#+END_SRC
+
+** 0.6 Uusi muistiinpano
+
+#+BEGIN_SRC plantuml :file osa0.6_spa.png
+selain   -> palvelin : POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+palvelin -> selain   : js data (message "note note created")
+#+END_SRC
+
+#+RESULTS:
+[[file:osa0.6_spa.png]]
+
+
+
+
